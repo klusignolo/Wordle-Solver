@@ -1,4 +1,6 @@
+from gettext import install
 import tkinter as tk
+from tkinter.ttk import Separator
 from wordle_solver.models import KnownLetter, SearchModel
 from wordle_solver.search_utility import SearchUtility
 from wordle_solver.utils.tkinter_utils import update_widget_text
@@ -51,10 +53,8 @@ class MainFrame(tk.Frame):
     def __init__(self, master, search_utility: SearchUtility):
         tk.Frame.__init__(self, master=master)
         self.search_utility = search_utility
-
-        self.info_label = tk.Label(self, text="For known letters, separate indices with a comma. Indices are zero-based.")
-        self.wrong_letters_lbl = tk.Label(self, text="Wrong Character(s):")
-        self.known_lbl = tk.Label(self, text="Known Character(s):")
+        wrong_letters_lbl = tk.Label(self, text="Wrong Character(s):")
+        known_lbl = tk.Label(self, text="Known Character(s):")
 
         known_letter_1 = KnownLetterFrame(self)
         known_letter_2 = KnownLetterFrame(self)
@@ -64,13 +64,12 @@ class MainFrame(tk.Frame):
         self.known_letter_frames = [known_letter_1, known_letter_2, known_letter_3, known_letter_4, known_letter_5]
 
         self.wrong_letters_entry = tk.Entry(self, width=10)
+        self.output_text_widget = tk.Text(self, width=45, state='disabled')
 
-        self.output_text = tk.Text(self, width=45, state='disabled')
-
-        self.info_label.grid(row=0, columnspan=3)
-        self.wrong_letters_lbl.grid(row=1, column=1)
-        self.wrong_letters_entry.grid(row=1, column=2)
-        self.known_lbl.grid(row=2, column=1)
+        wrong_letters_lbl.grid(row=0, column=1)
+        self.wrong_letters_entry.grid(row=0, column=2, pady=5)
+        Separator(self, orient="horizontal").grid(row=1, column=1, columnspan=2, sticky="ew", padx=2)
+        known_lbl.grid(row=2, column=1)
 
         known_letter_1.grid(row=4, column=1, columnspan=2, rowspan=2, padx=5)
         known_letter_2.grid(row=6, column=1, columnspan=2, rowspan=2, padx=5, pady=5)
@@ -78,11 +77,20 @@ class MainFrame(tk.Frame):
         known_letter_4.grid(row=10, column=1, columnspan=2, rowspan=2, padx=5, pady=5)
         known_letter_5.grid(row=12, column=1, columnspan=2, rowspan=2, padx=5, pady=5)
 
-        self.search_btn = tk.Button(self, width=20, text="Search", command=self.search)
+        self.search_btn = tk.Button(self, width=35, text="Search", command=self.search)
 
-        self.search_btn.grid(row=14, column=1, columnspan=2, padx=10, pady=5)
-        self.output_text.grid(row=1, column=0, rowspan=14, padx=5, pady=5)
+        self.search_btn.grid(row=14, column=0, columnspan=3, padx=10, pady=5)
+        self.output_text_widget.grid(row=0, column=0, rowspan=14, padx=5, pady=5)
+
         self.wrong_letters_entry.focus()
+        
+        instructions = "Welcome to Wordle Solver!\n" + \
+            "Yes. This is cheating.\n\n" + \
+            "Enter any search criteria on the right.\n" + \
+            "Then click Search to list possibilities.\n" + \
+            "Separate indices with a comma.\n" + \
+            "Indices are zero-based."
+        update_widget_text(self.output_text_widget, instructions)
 
     def search(self):
         if not self.validate_input():
@@ -93,17 +101,17 @@ class MainFrame(tk.Frame):
         word_list: list[str] = self.search_utility.search(search_model)
         suggested_word = self.search_utility.get_suggested_elimination_word(search_model)
 
+        output = ""
         if len(word_list) > 0:
-            output = f"Results: {len(word_list)}\n"
-            output += f"Suggested Elimination Word: {suggested_word}\n"
-            output += "Matching Words:\n" + "\n".join(word_list)
+            output = f"Suggested Elimination Word: {suggested_word}\n"
+            output += f"Possible Words ({str(len(word_list))}):\n" + "\n".join(word_list)
         else:
             output = "Results: None"
-        update_widget_text(self.output_text, output)
+        update_widget_text(self.output_text_widget, output)
 
     def validate_input(self):
         for known_letter_frame in self.known_letter_frames:
             if not known_letter_frame.validate():
-                update_widget_text(self.output_text, known_letter_frame.error_text())
+                update_widget_text(self.output_text_widget, known_letter_frame.error_text())
                 return False
         return True
