@@ -1,4 +1,4 @@
-# Wordle Solver
+#  ![](https://i.ibb.co/NWk7fRN/wordle-icon.png) Wordle Solver ![](https://i.ibb.co/NWk7fRN/wordle-icon.png)
 A simple Python utility for narrowing down guesses on [Wordle](https://www.powerlanguage.co.uk/wordle/).
 
 ![Wordle Solver](https://i.ibb.co/2tLFc6Y/Wordle.png)
