@@ -55,6 +55,8 @@ class MainFrame(tk.Frame):
         wrong_letters_lbl = tk.Label(self, text="Wrong Character(s):")
         known_lbl = tk.Label(self, text="Known Character(s):")
 
+        self.wrong_letters_entry = tk.Entry(self, width=10)
+        
         known_letter_1 = KnownLetterFrame(self)
         known_letter_2 = KnownLetterFrame(self)
         known_letter_3 = KnownLetterFrame(self)
@@ -62,7 +64,6 @@ class MainFrame(tk.Frame):
         known_letter_5 = KnownLetterFrame(self)
         self.known_letter_frames = [known_letter_1, known_letter_2, known_letter_3, known_letter_4, known_letter_5]
 
-        self.wrong_letters_entry = tk.Entry(self, width=10)
         self.output_text_widget = tk.Text(self, width=45, state='disabled')
 
         wrong_letters_lbl.grid(row=0, column=1)
