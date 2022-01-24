@@ -52,7 +52,7 @@ class MainFrame(tk.Frame):
         tk.Frame.__init__(self, master=master)
         self.search_utility = search_utility
 
-        self.info_label = tk.Label(self, text="For known letters, indices must be comma separated")
+        self.info_label = tk.Label(self, text="For known letters, separate indices with a comma. Indices are zero-based.")
         self.wrong_letters_lbl = tk.Label(self, text="Wrong Character(s):")
         self.known_lbl = tk.Label(self, text="Known Character(s):")
 
@@ -67,8 +67,6 @@ class MainFrame(tk.Frame):
 
         self.output_text = tk.Text(self, width=45, state='disabled')
 
-        self.search_btn = tk.Button(self, width=20, text="Search", command=self.search)
-
         self.info_label.grid(row=0, columnspan=3)
         self.wrong_letters_lbl.grid(row=1, column=1)
         self.wrong_letters_entry.grid(row=1, column=2)
@@ -80,8 +78,11 @@ class MainFrame(tk.Frame):
         known_letter_4.grid(row=10, column=1, columnspan=2, rowspan=2, padx=5, pady=5)
         known_letter_5.grid(row=12, column=1, columnspan=2, rowspan=2, padx=5, pady=5)
 
+        self.search_btn = tk.Button(self, width=20, text="Search", command=self.search)
+
         self.search_btn.grid(row=14, column=1, columnspan=2, padx=10, pady=5)
         self.output_text.grid(row=1, column=0, rowspan=14, padx=5, pady=5)
+        self.wrong_letters_entry.focus()
 
     def search(self):
         if not self.validate_input():
