@@ -1,4 +1,3 @@
-from gettext import install
 import tkinter as tk
 from tkinter.ttk import Separator
 from wordle_solver.models import KnownLetter, SearchModel

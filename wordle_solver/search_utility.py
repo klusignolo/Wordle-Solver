@@ -1,6 +1,3 @@
-from dis import code_info
-
-from numpy import char
 from wordle_solver.models import SearchModel
 
 class SearchUtility:
@@ -48,7 +45,6 @@ class SearchUtility:
         target = 5
         while target < len(char_map):
             most_common_chars = set([key for key in char_map][0:target])
-            print(most_common_chars)
             for word in words_array:
                 word_set = set(word)
 
