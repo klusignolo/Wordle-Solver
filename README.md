@@ -1,7 +1,7 @@
 #  ![](https://i.ibb.co/NWk7fRN/wordle-icon.png) Wordle Solver ![](https://i.ibb.co/NWk7fRN/wordle-icon.png)
-A simple Python utility for narrowing down guesses on [Wordle](https://www.powerlanguage.co.uk/wordle/).
+A simple Python utility for narrowing down guesses on [Wordle](https://www.powerlanguage.co.uk/wordle/). Example usage:
 
-![Wordle Solver](https://i.ibb.co/2tLFc6Y/Wordle.png)
+![Wordle Solver](https://i.ibb.co/TvNK2Xj/Solver.gif)
 
 Yes, this is technically cheating. But hey, who wants to lose a streak when it comes down to the 6/6 wire?
 
